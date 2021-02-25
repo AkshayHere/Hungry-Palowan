@@ -37,7 +37,7 @@ export function reducer(state = initialState, action) {
         case ACTIONS.SAVE_POSTS:
             var slugs = new Set(newState.posts.map(d => d.slug));
             var merged = [...newState.posts, ...action.payload.filter(d => !slugs.has(d.slug))];
-            newState.posts = merged;
+            newState.recipes = merged;
             console.log('newState.posts', newState.posts);
             return newState;
 

@@ -3,45 +3,44 @@ import { isEmpty } from 'lodash';
 import { select, take, takeLatest, takeEvery, call, put, spawn, delay, all } from 'redux-saga/effects';
 
 import {
-	GET_POSTS,
-	GET_POST_DETAILS,
+	GET_RECIPES,
+	GET_RECIPES_DETAILS,
 	SHOW_LOADER,
 	HIDE_LOADER,
-	SAVE_POSTS,
+	SAVE_RECIPES,
 	SET_PAGE_NO,
-	SAVE_POST_DETAILS,
+	SAVE_RECIPES_DETAILS,
 	API_ERROR_RESPONSE
 } from 'redux/constants';
 
 import requests from './requests';
 
-export function* getPosts() {
-	yield takeLatest(GET_POSTS, function* fetchRecords(payload) {
-		let posts = [];
+export function* getRecipes() {
+	yield takeLatest(GET_RECIPES, function* fetchRecords(payload) {
+		let recipes = [];
 
-		let { pageNo, limit } = payload.payload;
-		console.log('pageNo', pageNo);
-		console.log('limit', limit);
+		let { offset, number } = payload.payload;
+		console.log('offset', offset);
+		console.log('number', number);
 
 		try {
 			window.store.dispatch({ type: SHOW_LOADER, payload: {} });
-			const response = yield call(requests.getPosts, pageNo, limit);
+			const response = yield call(requests.getRecipes, offset, number);
 			if ('data' in response && response.data) {
-				posts = response.data.posts;
-				pageNo = response.data.current_page;
+				recipes = response.data.results;
+				offset = response.data.offset;
 
 				window.store.dispatch({ type: HIDE_LOADER, payload: {} });
 
-				console.log('posts', posts);
+				console.log('recipes', recipes);
 
 				// save posts
-				yield put({ type: SAVE_POSTS, payload: posts });
+				yield put({ type: SAVE_RECIPES, payload: recipes });
 
 				// save page no
-				yield put({ type: SET_PAGE_NO, payload: pageNo });
+				yield put({ type: SET_PAGE_NO, payload: offset });
 			}
 			else {
-				// window.location.href = '/error';
 				window.store.dispatch(push('/error'));
 				return;
 			}
@@ -55,8 +54,8 @@ export function* getPosts() {
 	});
 }
 
-export function* getPostDetails() {
-	yield takeLatest(GET_POST_DETAILS, function* fetchRecords(payload) {
+export function* getRecipeDetails() {
+	yield takeLatest(GET_RECIPES_DETAILS, function* fetchRecords(payload) {
 		let currentPost = {};
 
 		let { slug } = payload.payload;
@@ -70,7 +69,7 @@ export function* getPostDetails() {
 				window.store.dispatch({ type: HIDE_LOADER, payload: {} });
 				currentPost = response.data.posts.shift();
 				// save posts
-				yield put({ type: SAVE_POST_DETAILS, payload: currentPost });
+				yield put({ type: SAVE_RECIPES_DETAILS, payload: currentPost });
 			}
 			else {
 				// window.location.href = '/error';
@@ -90,8 +89,8 @@ export function* getPostDetails() {
 
 export default function* rootSaga() {
 	const sagas = [
-		getPosts,
-		getPostDetails,
+		getRecipes,
+		getRecipeDetails,
 	];
 
 	yield all(

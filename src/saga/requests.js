@@ -6,14 +6,14 @@ import {
 const requests = {
 
   /**
-   * Get posts based on page & limit
+   * Get Recipes based on page & limit
    * @param {*} page 
    * @param {*} limit 
    */
-  getPosts(page = 1, limit = 10) {
-    let url = process.env.REACT_APP_TIA_URL + "posts?" +
-      "page=" + page +
-      "&per_page=" + limit;
+  getRecipes(offset = 0, number = 10) {
+    let url = process.env.REACT_SPOONACULAR_URL + "recipes/complexSearch?" +
+      "offset=" + offset +
+      "&number=" + number;
     return axios.get(url, {
     })
       .then(response => {
@@ -29,11 +29,11 @@ const requests = {
   },
 
   /**
-   * Get Post Details by slug 
+   * Get Recipe Details by slug 
    * @param {*} slug 
    */
-  getPostDetails(slug) {
-    let url = process.env.REACT_APP_TIA_URL + "posts/" +slug;
+  getRecipeDetails(slug) {
+    let url = process.env.REACT_SPOONACULAR_URL + "posts/" +slug;
     return axios.get(url, {
     })
       .then(response => {
