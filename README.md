@@ -1,26 +1,37 @@
-# nanoTIA
+# The Hungry Palowan
 
-## Description
+A simple challenge for people interviewing for developer roles at Palo IT.
 
-Its a simple mini website which took motivation from [Tech in Asia](https://www.techinasia.com/) and build using various technologies like [ReactJS](https://reactjs.org/), [Redux](https://redux.js.org/), [Redux Saga](https://github.com/redux-saga/redux-saga), etc.
+## The Spoonacular API
 
-Currently secured using ssh.
+Please create an account at https://spoonacular.com/food-api 
 
-Email your public key @ akshymohn@gmail.com so that i grant you access to this repo.
+You will be using the following endpoints:
 
-## Installation
-Clone the project in your desired folder
+- [Search Recipes](https://spoonacular.com/food-api/docs#Search-Recipes-Complex)
+- [Search Recipes by Ingredients](https://spoonacular.com/food-api/docs#Search-Recipes-by-Ingredients)
+- [Get Recipe Information](https://spoonacular.com/food-api/docs#Get-Recipe-Information)
 
-    git clone https://github.com/AkshayHere/nanoTIA.git
+### The application
 
-Switch to the folder
+The application should show a paginated list of recipes with images and basic details:
 
-    cd nanoTIA
+![Recipe List](https://raw.githubusercontent.com/EvilJimJafar/coding-interview-challenge/main/recipe-list.png)
 
-Install the necessary packages
+Provide a menu allowing the user to search recipes in 2 ways:
 
-    npm install
+![Search Menu](https://raw.githubusercontent.com/EvilJimJafar/coding-interview-challenge/main/search-menu.png)
 
-Once installation is completed, run the project in your local system using the below command. You will be redirected to [localhost:3000/](localhost:3000/).
+When a user clicks the *view recipe* links, show a modal with the complete recipe information:
 
-    npm start
+![Recipe Detail Modal](https://raw.githubusercontent.com/EvilJimJafar/coding-interview-challenge/main/recipe-detail-modal.png)
+
+### The stack
+
+Please use React and Redux plus your choice of Redux Saga or Thunk.
+
+Please also write at least one unit test.
+
+### Delivery
+
+Please provide your finished app as a repo on GitHub/Bitbucket/Somewhere else.
