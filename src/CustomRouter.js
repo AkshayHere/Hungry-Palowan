@@ -68,7 +68,7 @@ export default function CustomRouter() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/debug" component={Debug} />
-            <Route exact path="/recipe/details/:slug" component={RecipeDetails} />
+            {/* <Route exact path="/recipe/details/:slug" component={RecipeDetails} /> */}
             <Route exact path="/error" component={ErrorPage} />
           </Switch>
         </Suspense>

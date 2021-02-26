@@ -7,7 +7,7 @@ import Master from 'pages/common/Master';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { getPostDetails, setPostDetails, getPosts } from 'redux/actions';
+import { searchRecipesByIngredients, searchRecipes} from 'redux/actions';
 import moment from 'moment';
 import CurrentPost from './components/CurrentPost';
 
@@ -29,9 +29,9 @@ const useStyles = makeStyles(theme => (
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPostDetails: (payload) => { dispatch(getPostDetails(payload)) },
-    setPostDetails: (payload) => { dispatch(setPostDetails(payload)) },
-    getPosts: (payload) => { dispatch(getPosts(payload)) },
+    // getPostDetails: (payload) => { dispatch(getPostDetails(payload)) },
+    // setPostDetails: (payload) => { dispatch(setPostDetails(payload)) },
+    // getPosts: (payload) => { dispatch(getPosts(payload)) },
     push: (url) => { dispatch(push(url)) },
     goBack: () => { dispatch(goBack()) },
   }
@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     currentPost: state.common && "currentPost" in state.common ? state.common.currentPost : null,
-    posts: state.common && "posts" in state.common ? state.common.posts : null
+    recipe: state.common && "recipe" in state.common ? state.common.recipe : null
   };
 }
 
@@ -73,7 +73,7 @@ function Component(props) {
 
       if (existinSlug !== slug) {
         payload['slug'] = slug;
-        props.getPostDetails(payload);
+        // props.getPostDetails(payload);
       }
     }
 

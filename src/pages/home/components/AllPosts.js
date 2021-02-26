@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getPosts: (payload) => { dispatch(getPosts(payload)) },
+        // getPosts: (payload) => { dispatch(getPosts(payload)) },
         push: (url) => { dispatch(push(url)) }
     }
 }
@@ -41,36 +41,36 @@ function Component(props) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        document.addEventListener("scroll", e => {
-            let totalBrowserHeight = document.body.offsetHeight;
-            let scrollHeight = window.scrollY;
-            let windowHeight = window.innerHeight;
+        // document.addEventListener("scroll", e => {
+        //     let totalBrowserHeight = document.body.offsetHeight;
+        //     let scrollHeight = window.scrollY;
+        //     let windowHeight = window.innerHeight;
 
-            if (((scrollHeight + windowHeight) + 5) >= totalBrowserHeight) {
-                console.log('reached end of page...');
-                let urlPath = window.location.pathname;
-                console.log('urlPath', urlPath);
-                if ('common' in window.store.getState() && 'pageNo' in window.store.getState().common) {
-                    if (urlPath === '/') {
-                        let nextPage = window.store.getState().common.pageNo + 1;
-                        console.log('nextPage', nextPage);
-                        let payload = {};
-                        payload['pageNo'] = nextPage;
-                        props.getPosts(payload);
-                        setLoading(true);
-                    }
-                }
-            } else {
-                setLoading(false);
-            }
-        })
+        //     if (((scrollHeight + windowHeight) + 5) >= totalBrowserHeight) {
+        //         console.log('reached end of page...');
+        //         let urlPath = window.location.pathname;
+        //         console.log('urlPath', urlPath);
+        //         if ('common' in window.store.getState() && 'pageNo' in window.store.getState().common) {
+        //             if (urlPath === '/') {
+        //                 let nextPage = window.store.getState().common.pageNo + 1;
+        //                 console.log('nextPage', nextPage);
+        //                 let payload = {};
+        //                 payload['pageNo'] = nextPage;
+        //                 props.getPosts(payload);
+        //                 setLoading(true);
+        //             }
+        //         }
+        //     } else {
+        //         setLoading(false);
+        //     }
+        // })
     }, []);
 
     return (
         <React.Fragment>
             <Grid container className={classes.root} spacing={2} direction="row" justify="center"
           alignItems="center">
-                {
+                {/* {
                     props.posts && props.posts.length ?
                         props.posts.map((post, index) => {
                             return (
@@ -79,7 +79,7 @@ function Component(props) {
                                 </Grid>
                             )
                         }) : <div><Loader /></div>
-                }
+                } */}
                 {
                     loading &&
                     <Grid item xs={12}>

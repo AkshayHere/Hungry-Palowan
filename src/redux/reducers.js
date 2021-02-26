@@ -34,9 +34,9 @@ export function reducer(state = initialState, action) {
             return newState;
 
         // save api data
-        case ACTIONS.SAVE_POSTS:
-            var slugs = new Set(newState.posts.map(d => d.slug));
-            var merged = [...newState.posts, ...action.payload.filter(d => !slugs.has(d.slug))];
+        case ACTIONS.SAVE_RECIPES:
+            var slugs = new Set(newState.recipes.map(d => d.slug));
+            var merged = [...newState.recipes, ...action.payload.filter(d => !slugs.has(d.slug))];
             newState.recipes = merged;
             console.log('newState.posts', newState.posts);
             return newState;

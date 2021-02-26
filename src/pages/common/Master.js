@@ -15,8 +15,7 @@ import { connect } from 'react-redux';
 import { createRef } from 'react';
 
 // company images
-const tiaLogo = process.env.PUBLIC_URL + "/tia-logo.png";
-// const tiaLogoSmall = process.env.PUBLIC_URL + "/tia-logo-small.png";
+const paloLogo = process.env.PUBLIC_URL + "/palo-logo.png";
 
 const mapStateToProps = (state) => {
     return {};
@@ -55,7 +54,7 @@ const useStyles = makeStyles(theme => ({
         },
     },
     appBar: {
-        borderBottom: '1px solid #C01820'
+        borderBottom: '1px solid #04E99E'
     },
     buttonFroup: {
         paddingLeft: "20px"
@@ -112,7 +111,7 @@ function MasterLayout(props) {
     const ref = createRef();
 
     React.useEffect(() => {
-        document.title = `Tech in Asia - Connecting Asia's startup ecosystem`;
+        document.title = `Hungry Palowan`;
     }, []);
 
     const redirectHome = (event) => {
@@ -126,12 +125,12 @@ function MasterLayout(props) {
                 <ElevationScroll {...props}>
                     <AppBar className={classes.appBar}>
                         <Toolbar>
-                            {/* Tech in Asia Logo */}
-                            <Card className={classes.cardRoot} elevation={0} onClick={redirectHome}>
+                            <Card className={classes.cardRoot} square={true} elevation={0} onClick={redirectHome}>
                                 <CardMedia
-                                    image={tiaLogo}
+                                style={{width:"40%"}}
+                                    image={paloLogo}
                                     component="img"
-                                    title="TIA Logo"
+                                    title="Palo IT Logo"
                                 />
                             </Card>
                         </Toolbar>

@@ -4,9 +4,10 @@ import Loader from 'pages/common/Loader';
 import Master from 'pages/common/Master';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import SearchBar from './components/SearchBar';
 // import './App.css';
 
-import AllPosts from './components/AllPosts';
+// import AllPosts from './components/AllPosts';
 
 const useStyles = makeStyles(theme => (
   {
@@ -33,7 +34,7 @@ function Component(props) {
   const classes = useStyles();
 
   useEffect(() => {
-    document.title = `Tech in Asia - Connecting Asia's startup ecosystem`;
+    document.title = `Hungry Palowan`;
   }, []);
 
   return (
@@ -42,7 +43,8 @@ function Component(props) {
         <Grid container className={classes.gridWrapper} spacing={4} direction="row" justify="center"
           alignItems="center">
           <Grid item xs={12}>
-            <AllPosts />
+            {/* <AllPosts /> */}
+            <SearchBar />
           </Grid>
         </Grid>
       </div>

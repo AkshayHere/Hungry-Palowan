@@ -3,7 +3,8 @@ import { isEmpty } from 'lodash';
 import { select, take, takeLatest, takeEvery, call, put, spawn, delay, all } from 'redux-saga/effects';
 
 import {
-	GET_RECIPES,
+	SEARCH_RECIPES,
+	SEARCH_RECIPES_BY_INGREDIENTS,
 	GET_RECIPES_DETAILS,
 	SHOW_LOADER,
 	HIDE_LOADER,
@@ -15,8 +16,48 @@ import {
 
 import requests from './requests';
 
-export function* getRecipes() {
-	yield takeLatest(GET_RECIPES, function* fetchRecords(payload) {
+export function* searchRecipes() {
+	yield takeLatest(SEARCH_RECIPES, function* fetchRecords(payload) {
+		let recipes = [];
+
+		let { offset, number, name } = payload.payload;
+		console.log('offset', offset);
+		console.log('number', number);
+		console.log('name', name);
+
+		try {
+			window.store.dispatch({ type: SHOW_LOADER, payload: {} });
+			const response = yield call(requests.searchRecipes, name, offset, number);
+			if ('data' in response && response.data) {
+				recipes = response.data.results;
+				offset = response.data.offset;
+
+				window.store.dispatch({ type: HIDE_LOADER, payload: {} });
+
+				console.log('recipes', recipes);
+
+				// save posts
+				yield put({ type: SAVE_RECIPES, payload: recipes });
+
+				// save page no
+				yield put({ type: SET_PAGE_NO, payload: offset });
+			}
+			else {
+				window.store.dispatch(push('/error'));
+				return;
+			}
+		} catch (error) {
+			console.warn('error : ', error);
+			yield put({ type: API_ERROR_RESPONSE, payload: error });
+			// window.location.href = '/error';
+			window.store.dispatch(push('/error'));
+			return;
+		}
+	});
+}
+
+export function* searchRecipesByIngredients() {
+	yield takeLatest(SEARCH_RECIPES_BY_INGREDIENTS, function* fetchRecords(payload) {
 		let recipes = [];
 
 		let { offset, number } = payload.payload;
@@ -25,7 +66,7 @@ export function* getRecipes() {
 
 		try {
 			window.store.dispatch({ type: SHOW_LOADER, payload: {} });
-			const response = yield call(requests.getRecipes, offset, number);
+			const response = yield call(requests.searchRecipesByIngredients, offset, number);
 			if ('data' in response && response.data) {
 				recipes = response.data.results;
 				offset = response.data.offset;
@@ -89,8 +130,9 @@ export function* getRecipeDetails() {
 
 export default function* rootSaga() {
 	const sagas = [
-		getRecipes,
-		getRecipeDetails,
+		searchRecipes,
+		searchRecipesByIngredients,
+		getRecipeDetails
 	];
 
 	yield all(
