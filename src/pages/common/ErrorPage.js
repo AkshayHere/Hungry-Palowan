@@ -49,35 +49,18 @@ function Component(props) {
               Something went wrong
             </Typography>
           </Grid>
-          {
-            props.errors &&
-            <React.Fragment>
-              <Grid item xs={12}>
-                <Typography variant="h4" component="h5">
-                  {props.errors.status}
-                </Typography>
-                <Typography variant="h5" component="h5">
-                  {props.errors.statusText}
-                </Typography>
-                <Typography variant="subtitle1" component="h5" id={props.errors.data.code}>
-                  {props.errors.data.message}
-                </Typography>
-              </Grid>
-            </React.Fragment>
-          }
           <Grid item xs={12}>
             <Grid container className={classes.grid} spacing={4} direction="row" justify="center"
               alignItems="center">
               <Grid item xs={12} sm={4}>
                 <Button
-                  variant="outlined"
-                  color="secondary"
+                  variant="contained" color="secondary"
                   className={classes.button}
                   startIcon={<ListIcon />}
                   fullWidth
                   onClick={redirectToHome}
                 >
-                  Back to Posts
+                  Go to Home Page
                   </Button>
               </Grid>
             </Grid>

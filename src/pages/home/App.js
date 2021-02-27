@@ -1,13 +1,12 @@
+import React from "react";
 import { Grid, makeStyles } from '@material-ui/core';
 import { push } from 'connected-react-router';
 import Loader from 'pages/common/Loader';
 import Master from 'pages/common/Master';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import RecipeCard from './components/RecipeCard';
 import SearchBar from './components/SearchBar';
-// import './App.css';
-
-// import AllPosts from './components/AllPosts';
 
 const useStyles = makeStyles(theme => (
   {
@@ -25,8 +24,10 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStoreStateToProps = (storeState) => {
   return {
+    pageLoader: storeState.common.pageLoader,
+    recipes: storeState.common.recipes,
   };
 }
 
@@ -45,11 +46,37 @@ function Component(props) {
           <Grid item xs={12}>
             <SearchBar />
           </Grid>
+          {
+            props.pageLoader &&
+            <Loader />
+          }
+          {
+            (!props.pageLoader && props.recipes.length) ?
+              <React.Fragment>
+                <Grid item xs={12}>
+                  <Grid
+                    container
+                    spacing={4}
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    {
+                      props.recipes.map((recipe, index) => {
+                        return (<Grid key={index} item xs={12} sm={8}>
+                          <RecipeCard recipe={recipe}/>
+                        </Grid>);
+                      })
+                    }
+                  </Grid>
+                </Grid>
+              </React.Fragment> : <React.Fragment>&nbsp;</React.Fragment>
+          }
         </Grid>
       </div>
     </Master>
   );
 }
 
-const App = connect(mapStateToProps, mapDispatchToProps)(Component);
+const App = connect(mapStoreStateToProps, mapDispatchToProps)(Component);
 export default App;

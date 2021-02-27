@@ -12,10 +12,8 @@ const initialState = {
 
     currentRecipe: {},
 
-    //common ui effects
-    uiEffects: {
-        pageLoader: false
-    },
+    // ui effects
+    pageLoader: false,
 
     // for api errors
     errors: {},
@@ -41,7 +39,7 @@ export function reducer(state = initialState, action) {
             var slugs = new Set(newState.recipes.map(d => d.slug));
             var merged = [...newState.recipes, ...action.payload.filter(d => !slugs.has(d.slug))];
             newState.recipes = merged;
-            console.log('newState.posts', newState.posts);
+            console.log('newState.recipes', newState.recipes);
             return newState;
 
         // Loader
@@ -72,12 +70,16 @@ export function reducer(state = initialState, action) {
             newState.searchOption = action.payload;
             return newState;
 
+        // Set Ingredients 
         case ACTIONS.SET_INGREDIENTS:
             newState.ingredients = [...newState.ingredients, action.payload];
             return newState;
 
         case ACTIONS.DELETE_INGREDIENTS:
             newState.ingredients = without(newState.ingredients, action.payload);
+            return newState;
+
+        case ACTIONS.SEARCH_RECIPES:
             return newState;
 
         default:

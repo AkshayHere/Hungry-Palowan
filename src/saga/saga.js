@@ -18,12 +18,20 @@ import requests from './requests';
 
 export function* searchRecipes() {
 	yield takeLatest(SEARCH_RECIPES, function* fetchRecords(payload) {
+		console.log('adasdasd', window.store.getState());
 		let recipes = [];
+		let currentState = window.store.getState().common;
 
-		let { offset, number, name } = payload.payload;
+		let searchOption = currentState.searchOption;
+		console.log('searchOption', searchOption);
+
+		let number = 10;
+		let offset = currentState.pageNo ? currentState.pageNo : 0;
 		console.log('offset', offset);
-		console.log('number', number);
+
+		let { name, ingredients } = payload.payload;
 		console.log('name', name);
+		console.log('ingredients', ingredients);
 
 		try {
 			window.store.dispatch({ type: SHOW_LOADER, payload: {} });

@@ -5,7 +5,7 @@ import { IconButton, InputAdornment, Grid, MenuItem, TextField, Select, FormCont
 import SearchIcon from '@material-ui/icons/Search';
 
 import { connect } from "react-redux";
-import { setSearchText, setSearchOption, setIngredients, deleteIngredients, searchRecipes, searchRecipesByIngredients } from "redux/actions";
+import { setSearchText, setSearchOption, setIngredients, deleteIngredients, searchRecipes } from "redux/actions";
 
 import { isEmpty, without } from "lodash";
 import ChipInput from "material-ui-chip-input";
@@ -28,24 +28,19 @@ const mapDispatchToStore = (dispatch) => {
     setSearchOption: (payload) => dispatch(setSearchOption(payload)),
     setIngredients: (payload) => dispatch(setIngredients(payload)),
     deleteIngredients: (payload) => dispatch(deleteIngredients(payload)),
-    searchRecipes: (payload) => dispatch(searchRecipes(payload)),
-    searchRecipesByIngredients: (payload) =>
-      dispatch(searchRecipesByIngredients(payload)),
+    searchRecipes: (payload) => dispatch(searchRecipes(payload))
   };
 };
 
 const styles = {
   options: {
-    "&&&:before": {
+    "&&:before": {
       borderBottom: "none"
     },
     "&&:after": {
       borderBottom: "none"
     }
   },
-  errorSelect: {
-    color: "#ff0000"
-  }
 };
 
 class SearchBar extends Component {
@@ -66,6 +61,7 @@ class SearchBar extends Component {
     });
   }
 
+  //----- START CHIPS
   // Add Chips
   handleAddChip = (chip) => {
     this.props.setIngredients(chip);
@@ -75,6 +71,7 @@ class SearchBar extends Component {
   handleDeleteChip = (chip) => {
     this.props.deleteIngredients(chip);
   }
+  //----- END CHIPS
 
   handleSelectChange = (event) => {
     this.resetErrors();
@@ -93,27 +90,43 @@ class SearchBar extends Component {
     this.resetErrors();
     console.log("this.props.searchText", this.props.searchText);
     console.log("this.props.searchOption", this.props.searchOption);
-
-    if (isEmpty(this.props.searchText)) {
-      console.log("1");
-      this.setState({
-        errorSearchText: true
-      });
-      return;
-    }
-
     if (isEmpty(this.props.searchOption)) {
-      console.log("2");
+      console.log("1");
       this.setState({
         errorSearchOptions: true
       });
       return;
     }
+
+    // handle search by name
+    if (isEmpty(this.props.searchText) && (this.props.searchOption === "searchByName")) {
+      console.log("2a");
+      this.setState({
+        errorSearchText: true
+      });
+      return;
+    }
+    
+    // handle search by name
+    if (isEmpty(this.props.ingredients) && (this.props.searchOption === "searchByIngredients")) {
+      console.log("2b");
+      this.setState({
+        errorSearchText: true
+      });
+      return;
+    }
     console.log("3");
 
+    let ingredients = this.props.ingredients;
+    console.log("ingredients", ingredients);
+    let name = this.props.searchText;
+    console.log("name",name);
 
-    // this.props.setSearchParam(payload);
-    // this.props.searchImages(payload);
+    let payload = {};
+    payload['name'] = name;
+    payload['ingredients'] = ingredients;
+
+    this.props.searchRecipes(payload);
   };
 
   handleFetchMore = () => {
@@ -121,7 +134,6 @@ class SearchBar extends Component {
 
   render() {
     const { classes } = this.props;
-    // let selectColor = (this.state.errorSearchOptions) ? classNames(classes.options, classes.errorSelect) : classNames(classes.options);
 
     return (
       <React.Fragment>
@@ -164,7 +176,8 @@ class SearchBar extends Component {
                   style: { height: "30px", fontSize: "20px" },
                   placeholder: "Search Recipes",
                 }}
-                error={(this.state.errorSearchText ? true : false)}
+                error={((this.state.errorSearchText && this.props.searchOption === "searchByName") ? true : false)}
+                helperText={((this.state.errorSearchText && this.props.searchOption === "searchByName") ? "* Required" : "")}
                 onChange={this.handleTextChange}
                 value={this.props.searchText}
               />
@@ -181,24 +194,13 @@ class SearchBar extends Component {
               value={this.props.ingredients}
               onAdd={(chip) => this.handleAddChip(chip)}
               onDelete={(chip, index) => this.handleDeleteChip(chip, index)}
-  //             chipRenderer={({ value, isFocused, isDisabled, handleClick, handleRequestDelete }, key) => (
-  //               <Chip
-  //                 key={key}
-  //                 style={{ margin: '8px 8px 0 0', float: 'left', pointerEvents: isDisabled ? 'none' : undefined }}
-  //                 // backgroundColor={isFocused ? "#ffffff" : "#ff0000"}
-  //                 color={"secondary"}
-  //                 onTouchTap={handleClick}
-  //                 onRequestDelete={handleRequestDelete}
-  //                 label={value}>
-  //                 <Avatar size={32}>{value[0].toUpperCase()}</Avatar>
-  //                 {value}
-  //               </Chip>
-  //             )}
+              error={((this.state.errorSearchText && this.props.searchOption === "searchByIngredients") ? true : false)}
+              helperText={((this.state.errorSearchText && this.props.searchOption === "searchByIngredients") ? "* Required" : "")}
               />
             </Grid>
           }
           <Grid item xs={12} md={8}>
-            <Button variant="contained" color="secondary" fullWidth>
+            <Button variant="contained" color="secondary" fullWidth onClick={this.handleSearch}>
               <SearchIcon />&nbsp;&nbsp;Search Recipes
             </Button>
           </Grid>
