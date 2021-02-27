@@ -1,9 +1,12 @@
 import * as ACTIONS from "./constants";
-import { cloneDeep, mergeWith, assign, merge, sortBy } from 'lodash';
+import { cloneDeep, mergeWith, assign, merge, sortBy, without } from 'lodash';
 
 const initialState = {
-    //api effects result / response
-    //all request=>responses will be dump into this area
+    // UI Control Values
+    searchText: '',
+    searchOption: "",
+    ingredients: [],
+
     recipes: [],
     pageNo: '',
 
@@ -58,6 +61,23 @@ export function reducer(state = initialState, action) {
         // save error response
         case ACTIONS.API_ERROR_RESPONSE:
             newState.errors = action.payload;
+            return newState;
+
+        // UI Controls
+        case ACTIONS.SET_SEARCH_TEXT:
+            newState.searchText = action.payload;
+            return newState;
+        
+        case ACTIONS.SET_SEARCH_OPTION:
+            newState.searchOption = action.payload;
+            return newState;
+
+        case ACTIONS.SET_INGREDIENTS:
+            newState.ingredients = [...newState.ingredients, action.payload];
+            return newState;
+
+        case ACTIONS.DELETE_INGREDIENTS:
+            newState.ingredients = without(newState.ingredients, action.payload);
             return newState;
 
         default:
