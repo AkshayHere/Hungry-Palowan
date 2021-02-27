@@ -43,7 +43,6 @@ function Component(props) {
         <Grid container className={classes.gridWrapper} spacing={4} direction="row" justify="center"
           alignItems="center">
           <Grid item xs={12}>
-            {/* <AllPosts /> */}
             <SearchBar />
           </Grid>
         </Grid>
