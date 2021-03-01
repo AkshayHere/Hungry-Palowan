@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles, Snackbar } from '@material-ui/core';
 import { push } from 'connected-react-router';
 import Loader from 'pages/common/Loader';
 import Master from 'pages/common/Master';
@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import RecipeCard from './components/RecipeCard';
 import SearchBar from './components/SearchBar';
+import Toast from "pages/common/Toast";
 
 const useStyles = makeStyles(theme => (
   {
@@ -28,6 +29,7 @@ const mapStoreStateToProps = (storeState) => {
   return {
     pageLoader: storeState.common.pageLoader,
     recipes: storeState.common.recipes,
+    errors: storeState.common.errors,
   };
 }
 
@@ -74,6 +76,10 @@ function Component(props) {
           }
         </Grid>
       </div>
+      {
+        props.errors &&
+        <Toast errors={props.errors}/>
+      }      
     </Master>
   );
 }

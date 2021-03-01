@@ -16,7 +16,7 @@ const initialState = {
     pageLoader: false,
 
     // for api errors
-    errors: {},
+    errors: [],
 };
 
 
@@ -36,9 +36,7 @@ export function reducer(state = initialState, action) {
 
         // save api data
         case ACTIONS.SAVE_RECIPES:
-            var slugs = new Set(newState.recipes.map(d => d.slug));
-            var merged = [...newState.recipes, ...action.payload.filter(d => !slugs.has(d.slug))];
-            newState.recipes = merged;
+            newState.recipes = action.payload;
             console.log('newState.recipes', newState.recipes);
             return newState;
 

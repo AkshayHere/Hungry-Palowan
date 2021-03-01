@@ -1,7 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -11,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from "react-redux";
 import { Grid, Paper } from '@material-ui/core';
 import { isEmpty } from 'lodash';
+import RecipeDetails from './RecipeDetails';
 
 const mapStoreStateToProps = (storeState) => {
     return {
@@ -54,6 +53,10 @@ function RecipeCard(props) {
         }
     }
 
+    const handleDetails = () => {
+        console.log('handleDetails');
+    };
+
     return (
         <React.Fragment>
             <Paper elevation={3}>
@@ -80,6 +83,7 @@ function RecipeCard(props) {
                             <Button size="small" color="secondary">
                                 View Recipe
                             </Button>
+                            <RecipeDetails handleDetails={handleDetails}/>
                         </CardActions>
                     </Grid>
                 </Grid>
@@ -90,4 +94,4 @@ function RecipeCard(props) {
     );
 }
 
-export default connect(mapStoreStateToProps, mapDispatchToStore)(RecipeCard)
+export default connect(mapStoreStateToProps, mapDispatchToStore)(RecipeCard);

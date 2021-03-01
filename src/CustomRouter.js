@@ -1,5 +1,5 @@
 import React, { Component, lazy, Suspense } from 'react';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import { combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
@@ -48,16 +48,8 @@ const Home = (lazy(() => (
   import(/* webpackChunkName: "Home" */ 'pages/home/App')
 )));
 
-const RecipeDetails = (lazy(() => (
-  import(/* webpackChunkName: "RecipeDetails" */ 'pages/recipeDetails/App')
-)));
-
 const ErrorPage = (lazy(() => (
   import(/* webpackChunkName: "ErrorPage" */ 'pages/common/ErrorPage')
-)));
-
-const Debug = (lazy(() => (
-  import(/* webpackChunkName: "Debug" */ 'pages/debug')
 )));
 
 export default function CustomRouter() {
@@ -67,9 +59,8 @@ export default function CustomRouter() {
         <Suspense fallback={<div />}>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/debug" component={Debug} />
-            {/* <Route exact path="/recipe/details/:slug" component={RecipeDetails} /> */}
             <Route exact path="/error" component={ErrorPage} />
+            <Redirect to={{pathname: "/error"}} />
           </Switch>
         </Suspense>
       </ConnectedRouter>

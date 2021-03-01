@@ -26,7 +26,7 @@ export function* searchRecipes() {
 		console.log('searchOption', searchOption);
 
 		let number = 10;
-		let offset = currentState.pageNo ? currentState.pageNo : 0;
+		let offset = currentState.pageNo ? parseInt(currentState.pageNo, 10) : 0;
 		console.log('offset', offset);
 
 		let { name, ingredients } = payload.payload;
@@ -35,30 +35,72 @@ export function* searchRecipes() {
 
 		try {
 			window.store.dispatch({ type: SHOW_LOADER, payload: {} });
-			const response = yield call(requests.searchRecipes, name, offset, number);
-			if ('data' in response && response.data) {
-				recipes = response.data.results;
-				offset = response.data.offset;
 
-				window.store.dispatch({ type: HIDE_LOADER, payload: {} });
+			switch (searchOption) {
+				case "searchByName": {
+					const response = yield call(requests.searchRecipes, name, offset, number);
+					if ('data' in response && response.data) {
+						recipes = response.data.results;
+						offset = response.data.offset;
 
-				console.log('recipes', recipes);
+						window.store.dispatch({ type: HIDE_LOADER, payload: {} });
 
-				// save posts
-				yield put({ type: SAVE_RECIPES, payload: recipes });
+						console.log('recipes', recipes);
 
-				// save page no
-				yield put({ type: SET_PAGE_NO, payload: offset });
-			}
-			else {
-				window.store.dispatch(push('/error'));
-				return;
+						// save posts
+						yield put({ type: SAVE_RECIPES, payload: recipes });
+
+						// save page no
+						yield put({ type: SET_PAGE_NO, payload: offset });
+					}
+					else {
+						// window.store.dispatch(push('/error'));
+						return;
+					}
+
+					break;
+				}
+
+				case "searchByIngredients": {
+					const response = yield call(requests.searchRecipesByIngredients, ingredients, number);
+					if ('data' in response && response.data) {
+						// console.log("response.data", response.data);
+						let items = response.data;
+						console.log("items", items);
+						let ids = items.map(a => a["id"]);
+						console.log("ids", ids);
+
+						const finalResponse = yield call(requests.getRecipesInfo, ids);
+						if ('data' in finalResponse && finalResponse.data) {
+							// console.log("finalResponse.data", finalResponse.data);
+							recipes = finalResponse.data;
+							console.log('recipes', recipes);
+
+							window.store.dispatch({ type: HIDE_LOADER, payload: {} });
+
+							// save posts
+							yield put({ type: SAVE_RECIPES, payload: recipes });
+
+							// save page no
+							yield put({ type: SET_PAGE_NO, payload: offset });
+						}
+					}
+					else {
+						// window.store.dispatch(push('/error'));
+						return;
+					}
+					break;
+				}
+
+				default:
+					window.store.dispatch(push('/error'));
+					break;
 			}
 		} catch (error) {
 			console.warn('error : ', error);
 			yield put({ type: API_ERROR_RESPONSE, payload: error });
 			// window.location.href = '/error';
-			window.store.dispatch(push('/error'));
+			// window.store.dispatch(push('/error'));
 			return;
 		}
 	});
