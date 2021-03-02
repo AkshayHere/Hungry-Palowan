@@ -10,6 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
 import { connect } from "react-redux";
+import { CardMedia, Grid } from '@material-ui/core';
 
 const styles = (theme) => ({
     root: {
@@ -63,7 +64,19 @@ const DialogActions = withStyles((theme) => ({
     },
 }))(MuiDialogActions);
 
+const useStyles = makeStyles({
+    root: {
+        // maxWidth: 345,
+    },
+    media: {
+        height: 220,
+        width: "100%"
+    },
+});
+
+
 function RecipeDetails(props) {
+    const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -77,32 +90,34 @@ function RecipeDetails(props) {
 
     return (
         <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Open dialog
-      </Button>
+            <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
+                View Recipe
+            </Button>
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Modal title
-        </DialogTitle>
+                    {props.recipe.title}
+                </DialogTitle>
                 <DialogContent dividers>
-                    <Typography gutterBottom>
-                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-                        in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-          </Typography>
-                    <Typography gutterBottom>
-                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-                        lacus vel augue laoreet rutrum faucibus dolor auctor.
-          </Typography>
-                    <Typography gutterBottom>
-                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                        scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-                        auctor fringilla.
-          </Typography>
+                <Grid container className={classes.gridWrapper} spacing={0} direction="row" justify="center"
+                    alignItems="center">
+                    <Grid item md={4} xs={12}>
+                        <CardMedia
+                            className={classes.media}
+                            image={props.recipe.image}
+                            title={props.recipe.title}
+                        />
+                    </Grid>
+                    <Grid item md={8} xs={12}>
+                            <Typography gutterBottom variant="h5" component="h2">
+                                {props.recipe.title}
+                            </Typography>
+                    </Grid>
+                </Grid>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="primary">
-                        Save changes
-          </Button>
+                    <Button autoFocus onClick={handleClose} color="secondary">
+                        Close
+                    </Button>
                 </DialogActions>
             </Dialog>
         </div>
