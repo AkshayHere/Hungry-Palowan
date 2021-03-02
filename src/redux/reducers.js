@@ -9,6 +9,7 @@ const initialState = {
 
     recipes: [],
     pageNo: '',
+    totalPages: '',
 
     currentRecipe: {},
 
@@ -33,6 +34,11 @@ export function reducer(state = initialState, action) {
         case ACTIONS.SAVE_RECIPES_DETAILS:
             newState.currentRecipe = assign({}, newState.currentRecipe, action.payload);
             return newState;
+        
+        // Reset Current Recipe Details
+        case ACTIONS.RESET_RECIPES_DETAILS:
+            newState.currentRecipe = {};
+            return newState;
 
         // save api data
         case ACTIONS.SAVE_RECIPES:
@@ -52,6 +58,11 @@ export function reducer(state = initialState, action) {
         // save page no
         case ACTIONS.SET_PAGE_NO:
             newState.pageNo = action.payload;
+            return newState;
+        
+        // save total pages
+        case ACTIONS.SET_TOTAL_PAGES:
+            newState.totalPages = action.payload;
             return newState;
 
         // save error response

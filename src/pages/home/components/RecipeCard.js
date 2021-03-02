@@ -80,7 +80,7 @@ function RecipeCard(props) {
                             <span>Calories : {('amount' in Calories && Calories['amount']) ? Calories['amount']+" "+Calories['unit'] : ""}</span><br/>
                         </CardContent>
                         <CardActions style={{paddingLeft : "12px"}}>
-                            <RecipeDetails handleDetails={handleDetails} recipe={props.recipe}/>
+                            <RecipeDetails handleDetails={handleDetails} recipe={props.recipe} recipeID={props.recipe.id}/>
                         </CardActions>
                     </Grid>
                 </Grid>

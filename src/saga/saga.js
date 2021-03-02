@@ -4,14 +4,14 @@ import { select, take, takeLatest, takeEvery, call, put, spawn, delay, all } fro
 
 import {
 	SEARCH_RECIPES,
-	SEARCH_RECIPES_BY_INGREDIENTS,
 	GET_RECIPES_DETAILS,
 	SHOW_LOADER,
 	HIDE_LOADER,
 	SAVE_RECIPES,
 	SET_PAGE_NO,
 	SAVE_RECIPES_DETAILS,
-	API_ERROR_RESPONSE
+	API_ERROR_RESPONSE,
+	SET_TOTAL_PAGES
 } from 'redux/constants';
 
 import requests from './requests';
@@ -25,7 +25,7 @@ export function* searchRecipes() {
 		let searchOption = currentState.searchOption;
 		console.log('searchOption', searchOption);
 
-		let number = 10;
+		let number = 5;
 		let offset = currentState.pageNo ? parseInt(currentState.pageNo, 10) : 0;
 		console.log('offset', offset);
 
@@ -42,6 +42,7 @@ export function* searchRecipes() {
 					if ('data' in response && response.data) {
 						recipes = response.data.results;
 						offset = response.data.offset;
+						let totalResults = parseInt(response.data.totalResults / number, 10);
 
 						window.store.dispatch({ type: HIDE_LOADER, payload: {} });
 
@@ -52,6 +53,7 @@ export function* searchRecipes() {
 
 						// save page no
 						yield put({ type: SET_PAGE_NO, payload: offset });
+						yield put({ type: SET_TOTAL_PAGES, payload: totalResults });
 					}
 					else {
 						// window.store.dispatch(push('/error'));
@@ -82,7 +84,7 @@ export function* searchRecipes() {
 							yield put({ type: SAVE_RECIPES, payload: recipes });
 
 							// save page no
-							yield put({ type: SET_PAGE_NO, payload: offset });
+							// yield put({ type: SET_PAGE_NO, payload: offset });
 						}
 					}
 					else {
@@ -99,47 +101,7 @@ export function* searchRecipes() {
 		} catch (error) {
 			console.warn('error : ', error);
 			yield put({ type: API_ERROR_RESPONSE, payload: error });
-			// window.location.href = '/error';
 			// window.store.dispatch(push('/error'));
-			return;
-		}
-	});
-}
-
-export function* searchRecipesByIngredients() {
-	yield takeLatest(SEARCH_RECIPES_BY_INGREDIENTS, function* fetchRecords(payload) {
-		let recipes = [];
-
-		let { offset, number } = payload.payload;
-		console.log('offset', offset);
-		console.log('number', number);
-
-		try {
-			window.store.dispatch({ type: SHOW_LOADER, payload: {} });
-			const response = yield call(requests.searchRecipesByIngredients, offset, number);
-			if ('data' in response && response.data) {
-				recipes = response.data.results;
-				offset = response.data.offset;
-
-				window.store.dispatch({ type: HIDE_LOADER, payload: {} });
-
-				console.log('recipes', recipes);
-
-				// save posts
-				yield put({ type: SAVE_RECIPES, payload: recipes });
-
-				// save page no
-				yield put({ type: SET_PAGE_NO, payload: offset });
-			}
-			else {
-				window.store.dispatch(push('/error'));
-				return;
-			}
-		} catch (error) {
-			console.warn('error : ', error);
-			yield put({ type: API_ERROR_RESPONSE, payload: error });
-			// window.location.href = '/error';
-			window.store.dispatch(push('/error'));
 			return;
 		}
 	});
@@ -147,23 +109,16 @@ export function* searchRecipesByIngredients() {
 
 export function* getRecipeDetails() {
 	yield takeLatest(GET_RECIPES_DETAILS, function* fetchRecords(payload) {
-		let currentPost = {};
-
-		let { slug } = payload.payload;
-		console.log('slug', slug);
+		let { id } = payload.payload;
+		console.log('id', id);
 
 		try {
-			window.store.dispatch({ type: SHOW_LOADER, payload: {} });
-
-			const response = yield call(requests.getPostDetails, slug);
+			const response = yield call(requests.getRecipeDetails, id);
 			if ('data' in response && response.data) {
-				window.store.dispatch({ type: HIDE_LOADER, payload: {} });
-				currentPost = response.data.posts.shift();
-				// save posts
-				yield put({ type: SAVE_RECIPES_DETAILS, payload: currentPost });
+				let currentRecipe = response.data;
+				yield put({ type: SAVE_RECIPES_DETAILS, payload: currentRecipe });
 			}
 			else {
-				// window.location.href = '/error';
 				window.store.dispatch(push('/error'));
 				return;
 			}
@@ -171,8 +126,7 @@ export function* getRecipeDetails() {
 			let errorData = error.response;
 			console.log('errorData', errorData);
 			window.store.dispatch({ type: API_ERROR_RESPONSE, payload: errorData });
-			// window.location.href = '/error';
-			window.store.dispatch(push('/error'));
+			// window.store.dispatch(push('/error'));
 			return;
 		}
 	});
@@ -181,7 +135,6 @@ export function* getRecipeDetails() {
 export default function* rootSaga() {
 	const sagas = [
 		searchRecipes,
-		searchRecipesByIngredients,
 		getRecipeDetails
 	];
 
@@ -193,7 +146,7 @@ export default function* rootSaga() {
 						yield call(saga);
 						break;
 					} catch (e) {
-						yield delay(1000); // Avoid infinite failures blocking app TODO use backoff retry policy...
+						yield delay(1000);
 					}
 				}
 			})

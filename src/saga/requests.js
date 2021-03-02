@@ -11,7 +11,7 @@ const requests = {
    * @param {*} page 
    * @param {*} limit 
    */
-  searchRecipes(name, offset = 0, number = 10) {
+  searchRecipes(name, offset = 0, number = 5) {
     let url = process.env.REACT_APP_SPOONACULAR_URL + "recipes/complexSearch?" +
       "query=" + name +
       "&offset=" + offset +
@@ -37,7 +37,7 @@ const requests = {
    * @param {*} ingredients 
    * @param {*} number 
    */
-  searchRecipesByIngredients(ingredients, number = 10, offset = 0) {
+  searchRecipesByIngredients(ingredients, number = 5, offset = 0) {
     // number = offset ? number*offset : number;
     let url = process.env.REACT_APP_SPOONACULAR_URL + "recipes/findByIngredients?" +
       "number=" + number+
@@ -82,11 +82,13 @@ const requests = {
   },
 
   /**
-   * Get Recipe Details by slug 
-   * @param {*} slug 
+   * Get Recipe Details by id 
+   * @param {*} id
+   * https://api.spoonacular.com/recipes/716429/information?includeNutrition=false
+   * https://api.spoonacular.com/recipes/632573/information&apiKey=%22dd73a2c098914ddca1846b1f0ca48862
    */
-  getRecipeDetails(slug) {
-    let url = process.env.REACT_SPOONACULAR_URL + "posts/" +slug;
+  getRecipeDetails(id) {
+    let url = process.env.REACT_APP_SPOONACULAR_URL + `recipes/${id}/information?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`;
     return axios.get(url, {
     })
       .then(response => {

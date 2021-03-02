@@ -2,11 +2,11 @@ import{
     SEARCH_RECIPES,
     SAVE_RECIPES,
     GET_RECIPES_DETAILS,
-    SAVE_RECIPES_DETAILS,
     SET_SEARCH_TEXT,
     SET_SEARCH_OPTION,
     SET_INGREDIENTS,
-    DELETE_INGREDIENTS
+    DELETE_INGREDIENTS,
+    RESET_RECIPES_DETAILS
 } from './constants';
 
 export function setSearchText(payload) {
@@ -43,6 +43,6 @@ export function getRecipeDetails(payload) {
     return { type: GET_RECIPES_DETAILS, payload }
 }
 
-export function setRecipeDetails(payload) {
-    return { type: SAVE_RECIPES_DETAILS, payload }
+export function resetRecipeDetails() {
+    return { type: RESET_RECIPES_DETAILS }
 }
