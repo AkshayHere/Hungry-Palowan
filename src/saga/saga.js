@@ -60,7 +60,6 @@ export function* searchRecipes() {
 
 						// console.log('recipes', recipes);
 
-						// save posts
 						yield put({ type: SAVE_RECIPES, payload: recipes });
 
 						// save page no
@@ -92,7 +91,6 @@ export function* searchRecipes() {
 
 							window.store.dispatch({ type: HIDE_LOADER, payload: {} });
 
-							// save posts
 							yield put({ type: SAVE_RECIPES, payload: recipes });
 
 							// save page no
