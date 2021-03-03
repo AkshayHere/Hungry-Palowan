@@ -38,7 +38,7 @@ const mapStoreStateToProps = (storeState) => {
     totalPages: storeState.common.totalPages,
     pageNo: storeState.common.pageNo,
     searchText: storeState.common.searchText,
-    searchOption: storeState.common.searchOption ,
+    searchOption: storeState.common.searchOption,
   };
 }
 
@@ -49,10 +49,10 @@ function Component(props) {
     document.title = `Hungry Palowan`;
   }, []);
 
-  const handlePageAdd = () =>{
+  const handlePageAdd = () => {
     // console.log("handlePageAdd");
     // console.log("props.pageNo", props.pageNo);
-    let newPageNo = parseInt(props.pageNo,10) + 1;
+    let newPageNo = parseInt(props.pageNo, 10) + 1;
     let searchText = props.searchText;
     // console.log("newPageNo",newPageNo);
     props.setPageNo(newPageNo);
@@ -63,10 +63,10 @@ function Component(props) {
     payload['ingredients'] = [];
     props.searchRecipes(payload);
   };
-  
-  const handlePageDiff = () =>{
+
+  const handlePageDiff = () => {
     // console.log("handlePageDiff");
-    let newPageNo = parseInt(props.pageNo,10) - 1;
+    let newPageNo = parseInt(props.pageNo, 10) - 1;
     let searchText = props.searchText;
     // console.log("newPageNo",newPageNo);
     props.setPageNo(newPageNo);
@@ -110,12 +110,24 @@ function Component(props) {
                     }
                   </Grid>
                 </Grid>
-              </React.Fragment> : <React.Fragment>&nbsp;</React.Fragment>
+              </React.Fragment> :
+              <React.Fragment>
+                <Grid item xs={12}>
+                  <Grid
+                    container
+                    spacing={4}
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                  </Grid>
+                </Grid>
+              </React.Fragment>
           }
           {
-            !props.pageLoader && props.totalPages && (props.searchOption === "searchByName") ?
+            (!props.pageLoader && (props.recipes.length === 0) && (props.pageNo === 0) && (props.totalPages === 0)) &&
             <React.Fragment>
-              <Grid item sm={8} xs={12}>
+              <Grid item xs={12}>
                 <Grid
                   container
                   spacing={4}
@@ -123,20 +135,38 @@ function Component(props) {
                   justify="center"
                   alignItems="center"
                 >
-                  <Grid item xs={9} sm={4}>
-                    <Fab color="secondary" size="small" disabled={(props.pageNo === 0) ? true : false} onClick={handlePageDiff}>
-                      <ChevronLeftIcon />
-                    </Fab>
+                  <Typography gutterBottom variant="h6" component="h2" align={"center"}>
+                    No Recipes were Found. Try searching for a new Recipe.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </React.Fragment>
+          }
+          {
+            !props.pageLoader && props.totalPages && (props.searchOption === "searchByName") ?
+              <React.Fragment>
+                <Grid item sm={8} xs={12}>
+                  <Grid
+                    container
+                    spacing={4}
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Grid item xs={9} sm={4}>
+                      <Fab color="secondary" size="small" disabled={(props.pageNo === 0) ? true : false} onClick={handlePageDiff}>
+                        <ChevronLeftIcon />
+                      </Fab>
                       &nbsp;&nbsp;&nbsp;&nbsp;
                         Page {parseInt(props.pageNo, 10) + 1} of {props.totalPages}
                       &nbsp;&nbsp;&nbsp;&nbsp;
                       <Fab color="secondary" size="small" disabled={(props.pageNo >= (props.totalPages - 1)) ? true : false} onClick={handlePageAdd}>
-                      <ChevronRightIcon />
-                    </Fab>
+                        <ChevronRightIcon />
+                      </Fab>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </React.Fragment> : <div>&nbsp;</div>
+              </React.Fragment> : <div>&nbsp;</div>
           }
         </Grid>
       </div>

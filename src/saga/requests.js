@@ -4,14 +4,13 @@ import {
 } from 'redux/constants';
 
 const requests = {
-
   /**
    * Search Recipes by name  (page & limit included)
    * @param {*} name 
    * @param {*} page 
    * @param {*} limit 
    */
-  searchRecipes(name, offset = 0, number = 5) {
+  searchRecipes(name, offset = 0, number = 10) {
     let url = process.env.REACT_APP_SPOONACULAR_URL + "recipes/complexSearch?" +
       "query=" + name +
       "&offset=" + offset +
@@ -37,8 +36,7 @@ const requests = {
    * @param {*} ingredients 
    * @param {*} number 
    */
-  searchRecipesByIngredients(ingredients, number = 5, offset = 0) {
-    // number = offset ? number*offset : number;
+  searchRecipesByIngredients(ingredients, number = 10, offset = 0) {
     let url = process.env.REACT_APP_SPOONACULAR_URL + "recipes/findByIngredients?" +
       "number=" + number+
       "&ingredients=" + ingredients.join(",")+
@@ -84,8 +82,7 @@ const requests = {
   /**
    * Get Recipe Details by id 
    * @param {*} id
-   * https://api.spoonacular.com/recipes/716429/information?includeNutrition=false
-   * https://api.spoonacular.com/recipes/632573/information&apiKey=%22dd73a2c098914ddca1846b1f0ca48862
+   * SAMPLE: https://api.spoonacular.com/recipes/632573/information&apiKey={API_KEYS_HERE}
    */
   getRecipeDetails(id) {
     let url = process.env.REACT_APP_SPOONACULAR_URL + `recipes/${id}/information?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`;

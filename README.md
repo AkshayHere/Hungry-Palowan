@@ -1,37 +1,34 @@
 # The Hungry Palowan
+#### Inspired by &copy; PALO IT
 
-A simple challenge for people interviewing for developer roles at Palo IT.
+A Simple react page which lets the users get various recipes based on name or ingredients.
 
-## The Spoonacular API
+The Project is mainly based on [Spoonacular API](https://spoonacular.com/food-api)
 
-Please create an account at https://spoonacular.com/food-api 
+Create an `.env` file in project root folder and assign the below environment variables as well
 
-You will be using the following endpoints:
+```env
+REACT_APP_SPOONACULAR_URL="https://api.spoonacular.com/"
+REACT_APP_SPOONACULAR_API_KEY="{YOUR_SPOONACULAR_API_KEY_HERE}"
+```
 
-- [Search Recipes](https://spoonacular.com/food-api/docs#Search-Recipes-Complex)
-- [Search Recipes by Ingredients](https://spoonacular.com/food-api/docs#Search-Recipes-by-Ingredients)
-- [Get Recipe Information](https://spoonacular.com/food-api/docs#Get-Recipe-Information)
+## Cloning and Running the Application in local
 
-### The application
+Clone the project into local
 
-The application should show a paginated list of recipes with images and basic details:
+Install all the npm packages. Go into the project folder and type the following command to install all npm packages
 
-![Recipe List](https://raw.githubusercontent.com/EvilJimJafar/coding-interview-challenge/main/recipe-list.png)
+```bash
+npm install
+```
 
-Provide a menu allowing the user to search recipes in 2 ways:
+In order to run the application Type the following command
 
-![Search Menu](https://raw.githubusercontent.com/EvilJimJafar/coding-interview-challenge/main/search-menu.png)
+```bash
+npm start
+```
+Inorder to test the application
 
-When a user clicks the *view recipe* links, show a modal with the complete recipe information:
-
-![Recipe Detail Modal](https://raw.githubusercontent.com/EvilJimJafar/coding-interview-challenge/main/recipe-detail-modal.png)
-
-### The stack
-
-Please use React and Redux plus your choice of Redux Saga or Thunk.
-
-Please also write at least one unit test.
-
-### Delivery
-
-Please provide your finished app as a repo on GitHub/Bitbucket/Somewhere else.
+```bash
+npm test
+```

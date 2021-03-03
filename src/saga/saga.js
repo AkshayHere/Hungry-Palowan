@@ -25,7 +25,7 @@ export function* searchRecipes() {
 		let searchOption = currentState.searchOption;
 		// console.log('searchOption', searchOption);
 
-		let number = 5;
+		let number = 10;
 		let offset = 0;
 
 		let { name, ingredients, pageNo } = payload.payload;
@@ -45,8 +45,16 @@ export function* searchRecipes() {
 					if ('data' in response && response.data) {
 						recipes = response.data.results;
 						// offset = response.data.offset;
-						offset = Math.ceil(parseInt(response.data.offset / number, 10));
-						let totalResults = Math.ceil(parseInt(response.data.totalResults / number, 10));
+						// console.log('response.data.offset', response.data.offset);
+						// console.log('parseInt(response.data.offset / number, 10)', parseInt(response.data.offset / number, 10));
+						// offset = Math.ceil(parseInt(response.data.offset / number, 10));
+						offset = Math.ceil(response.data.offset / number, 10);
+						// console.log('offset', offset);
+
+						// console.log('response.data.totalResults', response.data.totalResults);
+						// console.log('parseInt(response.data.totalResults / number, 10)', parseInt(response.data.totalResults / number, 10));
+						let totalResults = Math.ceil(response.data.totalResults / number, 10);
+						// console.log('totalResults', totalResults);
 
 						window.store.dispatch({ type: HIDE_LOADER, payload: {} });
 
