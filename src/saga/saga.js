@@ -26,12 +26,15 @@ export function* searchRecipes() {
 		console.log('searchOption', searchOption);
 
 		let number = 5;
-		let offset = currentState.pageNo ? parseInt(currentState.pageNo, 10) : 0;
-		console.log('offset', offset);
+		let offset = 0;
 
-		let { name, ingredients } = payload.payload;
+		let { name, ingredients, pageNo } = payload.payload;
 		console.log('name', name);
 		console.log('ingredients', ingredients);
+		console.log('pageNo', pageNo);
+
+		offset = pageNo ? parseInt(pageNo*number, 10) : 0;
+		console.log('offset', offset);
 
 		try {
 			window.store.dispatch({ type: SHOW_LOADER, payload: {} });
@@ -41,8 +44,9 @@ export function* searchRecipes() {
 					const response = yield call(requests.searchRecipes, name, offset, number);
 					if ('data' in response && response.data) {
 						recipes = response.data.results;
-						offset = response.data.offset;
-						let totalResults = parseInt(response.data.totalResults / number, 10);
+						// offset = response.data.offset;
+						offset = Math.ceil(parseInt(response.data.offset / number, 10));
+						let totalResults = Math.ceil(parseInt(response.data.totalResults / number, 10));
 
 						window.store.dispatch({ type: HIDE_LOADER, payload: {} });
 

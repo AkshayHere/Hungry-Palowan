@@ -3,7 +3,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import { Card, CardMedia, useScrollTrigger, Zoom } from '@material-ui/core';
+import { Card, CardMedia, Typography, useScrollTrigger, Zoom } from '@material-ui/core';
+import CopyrightIcon from '@material-ui/icons/Copyright';
 
 import Container from '@material-ui/core/Container';
 import Fab from '@material-ui/core/Fab';
@@ -127,12 +128,14 @@ function MasterLayout(props) {
                         <Toolbar>
                             <Card className={classes.cardRoot} square={true} elevation={0} onClick={redirectHome}>
                                 <CardMedia
-                                style={{width:"40%"}}
+                                style={{width:"30%"}}
                                     image={paloLogo}
                                     component="img"
                                     title="Palo IT Logo"
+                                    alt={"Palo IT Logo"}
                                 />
                             </Card>
+                            <Typography variant="h6" component="h5">Hungry Palowan</Typography>
                         </Toolbar>
                     </AppBar>
                 </ElevationScroll>

@@ -5,7 +5,7 @@ import { IconButton, InputAdornment, Grid, MenuItem, TextField, Select, FormCont
 import SearchIcon from '@material-ui/icons/Search';
 
 import { connect } from "react-redux";
-import { setSearchText, setSearchOption, setIngredients, deleteIngredients, searchRecipes } from "redux/actions";
+import { setSearchText, setSearchOption, setIngredients, deleteIngredients, searchRecipes, saveRecipes, setTotalPages } from "redux/actions";
 
 import { isEmpty, without } from "lodash";
 import ChipInput from "material-ui-chip-input";
@@ -28,7 +28,9 @@ const mapDispatchToStore = (dispatch) => {
     setSearchOption: (payload) => dispatch(setSearchOption(payload)),
     setIngredients: (payload) => dispatch(setIngredients(payload)),
     deleteIngredients: (payload) => dispatch(deleteIngredients(payload)),
-    searchRecipes: (payload) => dispatch(searchRecipes(payload))
+    searchRecipes: (payload) => dispatch(searchRecipes(payload)),
+    setTotalPages: (payload) => dispatch(setTotalPages(payload)),
+    saveRecipes: (payload) => dispatch(saveRecipes(payload)),
   };
 };
 
@@ -77,6 +79,10 @@ class SearchBar extends Component {
     this.resetErrors();
     let payload = event.target.value;
     this.props.setSearchOption(payload);
+
+    this.props.setSearchText("");
+    this.props.saveRecipes([]);
+    this.props.setTotalPages("");
   };
 
   // Handle text change
@@ -127,9 +133,6 @@ class SearchBar extends Component {
     payload['ingredients'] = ingredients;
 
     this.props.searchRecipes(payload);
-  };
-
-  handleFetchMore = () => {
   };
 
   render() {

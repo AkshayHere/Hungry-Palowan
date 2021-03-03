@@ -67,6 +67,7 @@ function RecipeCard(props) {
                             className={classes.media}
                             image={props.recipe.image}
                             title={props.recipe.title}
+                            alt={props.recipe.title}
                         />
                     </Grid>
                     <Grid item md={8} xs={12}>

@@ -6,7 +6,9 @@ import{
     SET_SEARCH_OPTION,
     SET_INGREDIENTS,
     DELETE_INGREDIENTS,
-    RESET_RECIPES_DETAILS
+    RESET_RECIPES_DETAILS,
+    SET_PAGE_NO,
+    SET_TOTAL_PAGES
 } from './constants';
 
 export function setSearchText(payload) {
@@ -45,4 +47,14 @@ export function getRecipeDetails(payload) {
 
 export function resetRecipeDetails() {
     return { type: RESET_RECIPES_DETAILS }
+}
+
+export function setPageNo(payload) {
+    console.log('actions > setPageNo');
+    return { type: SET_PAGE_NO, payload }
+}
+
+export function setTotalPages(payload) {
+    console.log('actions > setTotalPages');
+    return { type: SET_TOTAL_PAGES, payload }
 }
