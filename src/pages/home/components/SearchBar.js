@@ -5,7 +5,7 @@ import { IconButton, InputAdornment, Grid, MenuItem, TextField, Select, FormCont
 import SearchIcon from '@material-ui/icons/Search';
 
 import { connect } from "react-redux";
-import { setSearchText, setSearchOption, setIngredients, deleteIngredients, searchRecipes, saveRecipes, setTotalPages } from "redux/actions";
+import { setSearchText, setSearchOption, setIngredients, deleteIngredients, searchRecipes, saveRecipes, setTotalPages, resetIngredients } from "redux/actions";
 
 import { isEmpty, without } from "lodash";
 import ChipInput from "material-ui-chip-input";
@@ -28,6 +28,7 @@ const mapDispatchToStore = (dispatch) => {
     setSearchOption: (payload) => dispatch(setSearchOption(payload)),
     setIngredients: (payload) => dispatch(setIngredients(payload)),
     deleteIngredients: (payload) => dispatch(deleteIngredients(payload)),
+    resetIngredients: (payload) => dispatch(resetIngredients(payload)),
     searchRecipes: (payload) => dispatch(searchRecipes(payload)),
     setTotalPages: (payload) => dispatch(setTotalPages(payload)),
     saveRecipes: (payload) => dispatch(saveRecipes(payload)),
@@ -83,6 +84,7 @@ class SearchBar extends Component {
     this.props.setSearchText("");
     this.props.saveRecipes([]);
     this.props.setTotalPages("");
+    this.props.resetIngredients();
   };
 
   // Handle text change
@@ -94,10 +96,10 @@ class SearchBar extends Component {
   // handle serach
   handleSearch = () => {
     this.resetErrors();
-    console.log("this.props.searchText", this.props.searchText);
-    console.log("this.props.searchOption", this.props.searchOption);
+    // console.log("this.props.searchText", this.props.searchText);
+    // console.log("this.props.searchOption", this.props.searchOption);
     if (isEmpty(this.props.searchOption)) {
-      console.log("1");
+      // console.log("1");
       this.setState({
         errorSearchOptions: true
       });
@@ -106,7 +108,7 @@ class SearchBar extends Component {
 
     // handle search by name
     if (isEmpty(this.props.searchText) && (this.props.searchOption === "searchByName")) {
-      console.log("2a");
+      // console.log("2a");
       this.setState({
         errorSearchText: true
       });
@@ -115,18 +117,18 @@ class SearchBar extends Component {
     
     // handle search by name
     if (isEmpty(this.props.ingredients) && (this.props.searchOption === "searchByIngredients")) {
-      console.log("2b");
+      // console.log("2b");
       this.setState({
         errorSearchText: true
       });
       return;
     }
-    console.log("3");
+    // console.log("3");
 
     let ingredients = this.props.ingredients;
-    console.log("ingredients", ingredients);
+    // console.log("ingredients", ingredients);
     let name = this.props.searchText;
-    console.log("name",name);
+    // console.log("name",name);
 
     let payload = {};
     payload['name'] = name;

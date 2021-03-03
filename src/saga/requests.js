@@ -21,7 +21,7 @@ const requests = {
     return axios.get(url, {
     })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         return response;
       })
       .catch(error => {
@@ -46,7 +46,7 @@ const requests = {
     return axios.get(url, {
     })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         return response;
       })
       .catch(error => {
@@ -70,7 +70,7 @@ const requests = {
     return axios.get(url, {
     })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         return response;
       })
       .catch(error => {
@@ -92,12 +92,12 @@ const requests = {
     return axios.get(url, {
     })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         return response;
       })
       .catch(error => {
         let errorData = error.response.data;
-        console.log('errorData',errorData);
+        // console.log('errorData',errorData);
         window.store.dispatch({ type: API_ERROR_RESPONSE, payload: errorData });
         throw error;
       });

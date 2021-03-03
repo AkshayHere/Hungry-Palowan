@@ -43,7 +43,7 @@ export function reducer(state = initialState, action) {
         // save api data
         case ACTIONS.SAVE_RECIPES:
             newState.recipes = action.payload;
-            console.log('newState.recipes', newState.recipes);
+            // console.log('newState.recipes', newState.recipes);
             return newState;
 
         // Loader
@@ -86,6 +86,10 @@ export function reducer(state = initialState, action) {
 
         case ACTIONS.DELETE_INGREDIENTS:
             newState.ingredients = without(newState.ingredients, action.payload);
+            return newState;
+
+        case ACTIONS.RESET_INGREDIENTS:
+            newState.ingredients = [];
             return newState;
 
         case ACTIONS.SEARCH_RECIPES:

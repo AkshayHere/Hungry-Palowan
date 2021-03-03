@@ -50,11 +50,11 @@ function Component(props) {
   }, []);
 
   const handlePageAdd = () =>{
-    console.log("handlePageAdd");
-    console.log("props.pageNo", props.pageNo);
+    // console.log("handlePageAdd");
+    // console.log("props.pageNo", props.pageNo);
     let newPageNo = parseInt(props.pageNo,10) + 1;
     let searchText = props.searchText;
-    console.log("newPageNo",newPageNo);
+    // console.log("newPageNo",newPageNo);
     props.setPageNo(newPageNo);
 
     let payload = {};
@@ -65,10 +65,10 @@ function Component(props) {
   };
   
   const handlePageDiff = () =>{
-    console.log("handlePageDiff");
+    // console.log("handlePageDiff");
     let newPageNo = parseInt(props.pageNo,10) - 1;
     let searchText = props.searchText;
-    console.log("newPageNo",newPageNo);
+    // console.log("newPageNo",newPageNo);
     props.setPageNo(newPageNo);
 
     let payload = {};
@@ -113,7 +113,7 @@ function Component(props) {
               </React.Fragment> : <React.Fragment>&nbsp;</React.Fragment>
           }
           {
-            !props.pageLoader && props.totalPages && (props.searchOption === "searchByName") &&
+            !props.pageLoader && props.totalPages && (props.searchOption === "searchByName") ?
             <React.Fragment>
               <Grid item sm={8} xs={12}>
                 <Grid
@@ -130,13 +130,13 @@ function Component(props) {
                       &nbsp;&nbsp;&nbsp;&nbsp;
                         Page {parseInt(props.pageNo, 10) + 1} of {props.totalPages}
                       &nbsp;&nbsp;&nbsp;&nbsp;
-                      <Fab color="secondary" size="small" disabled={(props.pageNo >= props.totalPages) ? true : false} onClick={handlePageAdd}>
+                      <Fab color="secondary" size="small" disabled={(props.pageNo >= (props.totalPages - 1)) ? true : false} onClick={handlePageAdd}>
                       <ChevronRightIcon />
                     </Fab>
                   </Grid>
                 </Grid>
               </Grid>
-            </React.Fragment>
+            </React.Fragment> : <div>&nbsp;</div>
           }
         </Grid>
       </div>

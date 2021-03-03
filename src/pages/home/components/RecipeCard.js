@@ -54,7 +54,7 @@ function RecipeCard(props) {
     }
 
     const handleDetails = () => {
-        console.log('handleDetails');
+        // console.log('handleDetails');
     };
 
     return (

@@ -5,9 +5,6 @@
 /.pnp
 .pnp.js
 
-# testing
-/coverage
-
 # production
 /build
 
@@ -21,3 +18,9 @@ yarn-error.log*
 
 # added .vscode
 .vscode
+
+# .eslintcache
+.eslintcache
+
+# testing
+*.snap

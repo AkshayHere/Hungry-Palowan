@@ -8,36 +8,42 @@ import{
     DELETE_INGREDIENTS,
     RESET_RECIPES_DETAILS,
     SET_PAGE_NO,
-    SET_TOTAL_PAGES
+    SET_TOTAL_PAGES,
+    RESET_INGREDIENTS
 } from './constants';
 
 export function setSearchText(payload) {
-    console.log('actions > setSearchText');
+    // console.log('actions > setSearchText');
     return { type: SET_SEARCH_TEXT, payload }
 }
 
 export function setSearchOption(payload) {
-    console.log('actions > setSearchOption');
+    // console.log('actions > setSearchOption');
     return { type: SET_SEARCH_OPTION, payload }
 }
 
 export function setIngredients(payload) {
-    console.log('actions > setIngredients');
+    // console.log('actions > setIngredients');
     return { type: SET_INGREDIENTS, payload }
 }
 
 export function deleteIngredients(payload) {
-    console.log('actions > deleteIngredients');
+    // console.log('actions > deleteIngredients');
     return { type: DELETE_INGREDIENTS, payload }
 }
 
+export function resetIngredients() {
+    // console.log('actions > resetIngredients');
+    return { type: RESET_INGREDIENTS }
+}
+
 export function searchRecipes(payload) {
-    console.log('actions > searchRecipes');
+    // console.log('actions > searchRecipes');
     return { type: SEARCH_RECIPES, payload }
 }
 
 export function saveRecipes(payload) {
-    console.log('actions > saveRecipes');
+    // console.log('actions > saveRecipes');
     return { type: SAVE_RECIPES, payload }
 }
 
@@ -50,11 +56,11 @@ export function resetRecipeDetails() {
 }
 
 export function setPageNo(payload) {
-    console.log('actions > setPageNo');
+    // console.log('actions > setPageNo');
     return { type: SET_PAGE_NO, payload }
 }
 
 export function setTotalPages(payload) {
-    console.log('actions > setTotalPages');
+    // console.log('actions > setTotalPages');
     return { type: SET_TOTAL_PAGES, payload }
 }

@@ -54,11 +54,11 @@ function Component(props) {
     let slug = encodeURIComponent(path.split("/post/").pop());
 
     if (props.posts.length > 0) {
-      console.log('props.posts', props.posts);
+      // console.log('props.posts', props.posts);
       var result = props.posts.filter(obj => {
         return obj.slug === slug
       });
-      console.log('result', result);
+      // console.log('result', result);
 
       let existinSlug = result[0][slug];
 
@@ -89,15 +89,15 @@ function Component(props) {
   const [articles, setMoreArticles] = useState([]);
 
   // useEffect(() => {
-  //   console.log('custom', window.store.getState().common.pageNo);
-  //   console.log('articles', articles);
+  //   // console.log('custom', window.store.getState().common.pageNo);
+  //   // console.log('articles', articles);
 
   //   if(articles && articles.length > 0){
   //     let posts = window.store.getState().common.posts;
   //   let lastSlug = articles[articles.length - 1].slug;
   //   let index = posts.findIndex(x => x.slug === lastSlug);
   //   let newArticles = posts.slice(index);
-  //   console.log('newArticles.length', newArticles.length);
+  //   // console.log('newArticles.length', newArticles.length);
   //   setMoreArticles(newArticles);
   //   }
   // }, [window.store.getState().common.pageNo]);
@@ -109,39 +109,39 @@ function Component(props) {
       let windowHeight = window.innerHeight;
 
       if (((scrollHeight + windowHeight) + 10) >= totalBrowserHeight) {
-        console.log('reached end of page...');
+        // console.log('reached end of page...');
         let urlPath = window.location.pathname;
-        console.log('urlPath', urlPath);
+        // console.log('urlPath', urlPath);
         let existinSlug = window.store.getState().common.currentPost.slug;
-        console.log('existinSlug', existinSlug);
+        // console.log('existinSlug', existinSlug);
         // setSlug(existinSlug);
 
         if (urlPath === '/post/' + existinSlug) {
-          console.log('matches....');
+          // console.log('matches....');
           setLoading(true);
           setMoreArticles([]);
           let posts = window.store.getState().common.posts;
           let originalPostLength = posts.length;
           let index = posts.findIndex(x => x.slug === existinSlug);
-          console.log('index', index);
-          console.log('posts.length', posts.length);
+          // console.log('index', index);
+          // console.log('posts.length', posts.length);
           let moreArticles = posts.slice(index + 1);
-          console.log('moreArticles.length', moreArticles.length);
+          // console.log('moreArticles.length', moreArticles.length);
 
-          console.log('moreArticles', moreArticles);
+          // console.log('moreArticles', moreArticles);
           if (moreArticles && moreArticles.length === 0) {
             // this means we have reached the last element of our list
             let nextPage = window.store.getState().common.pageNo + 1;
-            console.log('nextPage', nextPage);
+            // console.log('nextPage', nextPage);
             let payload = {};
             payload['pageNo'] = nextPage;
             props.getPosts(payload);
 
             let newPosts = window.store.getState().common.posts;
-            console.log('newPosts.length', newPosts.length);
-            console.log('originalPostLength', originalPostLength);
+            // console.log('newPosts.length', newPosts.length);
+            // console.log('originalPostLength', originalPostLength);
             moreArticles = newPosts.slice(originalPostLength);
-            console.log('moreArticles.length', moreArticles.length);
+            // console.log('moreArticles.length', moreArticles.length);
           }
           setMoreArticles(moreArticles);
         }
