@@ -3,6 +3,8 @@
 
 A Simple react page which lets the users get various recipes based on name or ingredients.
 
+<a href="https://hungry-palowan.herokuapp.com/" target="_blank">View Demo</a>
+
 The Project is mainly based on [Spoonacular API](https://spoonacular.com/food-api)
 
 Create an `.env` file in project root folder and assign the below environment variables as well
