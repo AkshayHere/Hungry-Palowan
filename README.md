@@ -3,7 +3,7 @@
 
 A Simple react page which lets the users get various recipes based on name or ingredients.
 
-<a href="https://hungry-palowan.herokuapp.com/" target="_blank">View Demo</a>
+[View Demo](https://hungry-palowan.herokuapp.com/)
 
 The Project is mainly based on [Spoonacular API](https://spoonacular.com/food-api)
 
