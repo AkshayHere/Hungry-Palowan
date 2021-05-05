@@ -1,7 +1,7 @@
 # The Hungry Palowan
 #### Inspired by &copy; PALO IT
 
-A React based Website that lets users find various recipes based on Dishes or Ingredients.
+A React based Website that lets users find various Delicacies and their info based on their Names or Ingredients.
 
 [View Demo](https://hungry-palowan.herokuapp.com/)
 
